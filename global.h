@@ -35,7 +35,7 @@ void global<B>::init(Args&&... args)
 
     if(m_ptr != nullptr)
     {
-        throw std::runtime_error(__PRETTY_FUNCTION__);
+        throw std::runtime_error("global already initialized");
     }
     m_ptr = new D(std::forward<Args>(args)...);
 }
@@ -45,7 +45,7 @@ void global<B>::destroy()
 {
     if(m_ptr == nullptr)
     {
-        throw std::runtime_error(__PRETTY_FUNCTION__);
+        throw std::runtime_error("global not initialized");
     }
     delete m_ptr;
     m_ptr = nullptr;
@@ -63,7 +63,7 @@ B& global<B>::get()
 {
     if(m_ptr == nullptr)
     {
-        throw std::runtime_error(__PRETTY_FUNCTION__);
+        throw std::runtime_error("global not initialized");
     }
     return *m_ptr;
 }
