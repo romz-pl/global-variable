@@ -7,30 +7,29 @@ class global {
 public:
     template<std::derived_from<B> D = B>
     void init(auto&&... args) {
-        if (m_ptr) {
+        if (ptr)
             throw std::runtime_error("global already initialized");
-        }
-        m_ptr = std::make_unique<D>(std::forward<decltype(args)>(args)...);
+        ptr = std::make_unique<D>(std::forward<decltype(args)>(args)...);
     }
 
     void reset() noexcept {
-        m_ptr.reset();
+        ptr.reset();
     }
 
     B& get() {
-        if (!m_ptr)
+        if (!ptr)
             throw std::runtime_error("global not initialized");
-        return *m_ptr;
+        return *ptr;
     }
 
     const B& get() const {
-        if (!m_ptr)
+        if (!ptr)
             throw std::runtime_error("global not initialized");
-        return *m_ptr;
+        return *ptr;
     }
 
     bool exists() const noexcept {
-        return m_ptr != nullptr;
+        return ptr != nullptr;
     }
 
     explicit operator bool() const noexcept {
@@ -38,5 +37,5 @@ public:
     }
 
 private:
-    std::unique_ptr<B> m_ptr;
+    std::unique_ptr<B> ptr;
 };
