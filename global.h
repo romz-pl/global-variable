@@ -12,7 +12,8 @@ public:
     void destroy();
     B& get();
     const B& get() const;
-    bool exists() const;
+    bool exists() const noexcept;
+    explicit operator bool() const noexcept { return exists(); }
 
     global() = default;
     ~global();
@@ -80,7 +81,7 @@ const B& global<B>::get() const
 }
 
 template<typename B>
-bool global<B>::exists() const
+bool global<B>::exists() const noexcept
 {
     return m_ptr != nullptr;
 }
