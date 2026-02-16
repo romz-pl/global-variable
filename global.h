@@ -32,7 +32,8 @@ template<typename B>
 template<typename D, typename... Args>
 void global<B>::init(Args&&... args) 
 {
-    static_assert(std::is_same_v<B, D> || std::is_base_of_v<B, D>, 
+    static_assert(std::is_same_v<B, D> ||
+        (std::is_base_of_v<B, D> && std::has_virtual_destructor_v<B>),
         "Type D and B must be identical or type D must be derived from B.");
 
     if(m_ptr != nullptr)
