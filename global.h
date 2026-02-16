@@ -8,6 +8,7 @@ class global {
 public:
 
     global() = default;
+    ~global() noexcept = default;
 
     global(const global&) = delete;
     global(global&&) = delete;
