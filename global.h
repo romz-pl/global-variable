@@ -1,8 +1,7 @@
-#include <type_traits>
 #include <stdexcept>
-#include <cassert>
 
 template<typename B>
+requires std::is_destructible_v<B>
 class global
 {
 public:
@@ -41,9 +40,12 @@ public:
         return m_ptr != nullptr;
     }
 
-    explicit operator bool() const noexcept { return exists(); }
+    explicit operator bool() const noexcept {
+        return exists();
+    }
 
     global() = default;
+
     ~global() {
         if(m_ptr != nullptr)
             delete m_ptr;
