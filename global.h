@@ -30,18 +30,12 @@ public:
         ptr.reset();
     }
 
-    B& get() {
+    template<typename F>
+    auto with(F&& func) -> decltype(func(std::declval<B&>())) {
         std::lock_guard<std::mutex> lock(mtx);
         if (!ptr)
             throw std::runtime_error("global not initialized");
-        return *ptr;
-    }
-
-    const B& get() const {
-        std::lock_guard<std::mutex> lock(mtx);
-        if (!ptr)
-            throw std::runtime_error("global not initialized");
-        return *ptr;
+        return func(*ptr);
     }
 
     bool exists() const noexcept {

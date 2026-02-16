@@ -11,6 +11,11 @@ public:
 
 global<Matrix> gMatrix;
 
+void transpose(Matrix& m)
+{
+    m.transpose();
+}
+
 int main()
 {
     // First, the global variable must be initialized
@@ -18,8 +23,16 @@ int main()
     gMatrix.init(/* arguments to class Matrix*/);
     assert(gMatrix.exists());
 
+    try {
+        gMatrix.init();
+    }
+    catch(const std::runtime_error&)
+    {
+        std::cout << "Double init throws\n";
+    }
+
     // Use the global variable of type Matrix
-    gMatrix.get().transpose();
+    gMatrix.with(transpose);
 
     // Lastly the global variable must be destroyed
     gMatrix.reset();
