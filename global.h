@@ -5,6 +5,15 @@ template<typename B>
 requires std::is_destructible_v<B>
 class global {
 public:
+
+    global() = default;
+
+    global(const global&) = delete;
+    global(global&&) = delete;
+
+    global& operator=(const global&) = delete;
+    global& operator=(global&&) = delete;
+
     template<std::derived_from<B> D = B>
     void init(auto&&... args) {
         if (ptr)
