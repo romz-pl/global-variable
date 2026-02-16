@@ -16,6 +16,7 @@ public:
     global& operator=(global&&) = delete;
 
     template<std::derived_from<B> D = B, typename... Args>
+    requires std::constructible_from<D, Args...>
     void init(Args&&... args) {
         std::lock_guard<std::mutex> lock(mtx);
         if (ptr)
