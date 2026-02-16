@@ -23,8 +23,8 @@ int main()
     // Use the global variable of type Matrix
     gMatrix.get().transpose();
 
-    // Lasst the global variable must be destroyed
-    gMatrix.destroy();
+    // Lastly the global variable must be destroyed
+    gMatrix.reset();
     assert(!gMatrix.exists());
     assert(!gMatrix);
 
