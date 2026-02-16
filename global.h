@@ -37,10 +37,7 @@ void global<B>::init(Args&&... args)
     {
         throw std::runtime_error(__PRETTY_FUNCTION__);
     }
-    else
-    {
-        m_ptr = new D(std::forward<Args>(args)...);
-    }
+    m_ptr = new D(std::forward<Args>(args)...);
 }
 
 template<typename B>
@@ -50,11 +47,9 @@ void global<B>::destroy()
     {
         throw std::runtime_error(__PRETTY_FUNCTION__);
     }
-    else
-    {
-        delete m_ptr;
-        m_ptr = nullptr;
-    }
+    delete m_ptr;
+    m_ptr = nullptr;
+
 }
 
 template<typename B>
@@ -70,10 +65,7 @@ B& global<B>::get()
     {
         throw std::runtime_error(__PRETTY_FUNCTION__);
     }
-    else
-    {
-        return *m_ptr;
-    }
+    return *m_ptr;
 }
 
 template<typename B>
