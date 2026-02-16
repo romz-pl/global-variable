@@ -48,10 +48,6 @@ public:
         return ptr != nullptr;
     }
 
-    explicit operator bool() const noexcept {
-        return exists();
-    }
-
 private:
     std::unique_ptr<B> ptr;
     mutable std::mutex mtx;
