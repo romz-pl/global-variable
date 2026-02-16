@@ -5,15 +5,11 @@ requires std::is_destructible_v<B>
 class global
 {
 public:
-    template<typename D = B, typename... Args>
-    void init(Args&&... args) {
-        static_assert(std::is_same_v<B, D> ||
-                          (std::is_base_of_v<B, D> && std::has_virtual_destructor_v<B>),
-                      "Type D and B must be identical or type D must be derived from B.");
-
+    template<std::derived_from<B> D = B>
+    void init(auto&&... args) {
         if(m_ptr != nullptr)
             throw std::runtime_error("global already initialized");
-        m_ptr = new D(std::forward<Args>(args)...);
+        m_ptr = new D(std::forward<decltype(args)>(args)...);
     }
 
     void destroy() {
