@@ -11,6 +11,7 @@ public:
 
     void destroy();
     B& get();
+    const B& get() const;
     bool exists() const;
 
     global() = default;
@@ -62,6 +63,16 @@ template<typename B>
 B& global<B>::get()
 {
     if(m_ptr == nullptr)
+    {
+        throw std::runtime_error("global not initialized");
+    }
+    return *m_ptr;
+}
+
+template<typename B>
+const B& global<B>::get() const
+{
+    if (!m_ptr)
     {
         throw std::runtime_error("global not initialized");
     }
