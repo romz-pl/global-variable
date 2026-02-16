@@ -58,7 +58,10 @@ void global<B>::destroy()
 template<typename B>
 global<B>::~global()
 {
-    assert(m_ptr == nullptr && "Function destroy() was not called");
+    if(m_ptr != nullptr)
+    {
+        delete m_ptr;
+    }
 }
 
 template<typename B>
