@@ -14,11 +14,11 @@ public:
     global& operator=(const global&) = delete;
     global& operator=(global&&) = delete;
 
-    template<std::derived_from<B> D = B>
-    void init(auto&&... args) {
+    template<std::derived_from<B> D = B, typename... Args>
+    void init(Args&&... args) {
         if (ptr)
             throw std::runtime_error("global already initialized");
-        ptr = std::make_unique<D>(std::forward<decltype(args)>(args)...);
+        ptr = std::make_unique<D>(std::forward<Args>(args)...);
     }
 
     void reset() noexcept {
